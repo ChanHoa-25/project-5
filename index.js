@@ -1,13 +1,23 @@
 const express = require("express");
+const path = require("path");
 const app = express();
 const port = 3000;
 
+//Thiết lập thư mục views và view engine pug
+app.set("views", path.join(__dirname, "views")); //Thư mục chứa file pug
+
+app.set("view engine", "pug"); //thiết lập pug làm view engine
+
 app.get("/", (req, res) => {
-  res.send("Trang chủ");
+  res.render("client/pages/home", {
+    pageTitle: "Trang chủ",
+  });
 });
 
 app.get("/tours", (req, res) => {
-  res.send("Trang danh sách tour");
+  res.render("client/pages/tour-list", {
+    pageTitle: "Danh sách tour",
+  });
 });
 
 app.listen(port, () => {
