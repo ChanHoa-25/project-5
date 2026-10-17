@@ -4,19 +4,22 @@ const express = require("express");
 const path = require("path");
 const mongoose = require("mongoose");
 require("dotenv").config();
-mongoose.connect(process.env.DATABASE);
+const database = require("./config/database");
 const clientRoutes = require("./routes/client/index.route");
 
 const app = express();
 const port = 3000;
+//Kết nối database
+database.connect();
 
 //Thiết lập thư mục views và view engine pug
 app.set("views", path.join(__dirname, "views")); //Thư mục chứa file pug
 
 app.set("view engine", "pug"); //thiết lập pug làm view engine
 
-//thiết lập thư mục chứa các file tĩnh
+//Thiết lập thư mục chứa các file tĩnh
 app.use(express.static(path.join(__dirname, "public")));
+
 //Thiết lập đường dẫn
 app.use("/", clientRoutes);
 app.listen(port, () => {
